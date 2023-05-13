@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-05-13T14:58:58.242Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="hynDb5VeCDKkKZ5s2Qy0" version="21.2.9" type="github">
+<mxfile host="app.diagrams.net" modified="2023-05-13T15:04:30.444Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="LHGjd3ngkmt0r_2CumxF" version="21.2.9" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="2080" dy="1715" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -30,33 +30,27 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="GpCBLMyIrS85qdbW2vYx-50" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-6" target="GpCBLMyIrS85qdbW2vYx-0">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-6" value="Independent Vars needed?" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;fillColor=#FFD966;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="172.5" y="201.5" width="100" height="70" as="geometry" />
+          <mxGeometry x="170" y="200" width="100" height="70" as="geometry" />
         </mxCell>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-8" value="" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-10" target="WIyWlLk6GJQsqaUBKTNV-11" edge="1">
           <mxGeometry x="0.3333" y="20" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-10" value="Parameters Tuning" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;fillColor=#00CCCC;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="170" y="810" width="100" height="90" as="geometry" />
-        </mxCell>
-        <mxCell id="GpCBLMyIrS85qdbW2vYx-1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-11" target="WIyWlLk6GJQsqaUBKTNV-10">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="WIyWlLk6GJQsqaUBKTNV-10" value="Automated Parameters Tuning" style="rhombus;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=12;align=center;strokeWidth=1;spacing=6;spacingTop=-4;fillColor=#00CCCC;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+          <mxGeometry x="165" y="810" width="110" height="90" as="geometry" />
         </mxCell>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-11" value="Model Results" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;fillColor=#00CCCC;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="160" y="950" width="120" height="30" as="geometry" />
         </mxCell>
         <mxCell id="YIQBCHJmsgLGY7iEL0ec-0" value="&lt;p style=&quot;box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Arial, &amp;quot;Noto Sans&amp;quot;, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;, &amp;quot;Noto Color Emoji&amp;quot;; text-align: left; font-size: 11px;&quot; id=&quot;yui_3_17_2_1_1683880889275_62&quot; dir=&quot;ltr&quot;&gt;&lt;font style=&quot;font-size: 11px; background-color: rgb(255, 255, 255);&quot;&gt;&lt;b&gt;Project idea:&lt;/b&gt;&lt;br style=&quot;box-sizing: border-box;&quot;&gt;&lt;br style=&quot;box-sizing: border-box;&quot;&gt;Time-series analysis dashboard built in in R shiny possesing following functionalities:&lt;br style=&quot;box-sizing: border-box;&quot;&gt;- loading a .csv file in&lt;br style=&quot;box-sizing: border-box;&quot;&gt;- indicating analysed time series and date variables&lt;br style=&quot;box-sizing: border-box;&quot;&gt;- specifiying set of&amp;nbsp; independent variables&lt;br style=&quot;box-sizing: border-box;&quot;&gt;-&amp;nbsp;describing characteristics of timeseries (autocorrelation, stationarity, seasonality)&lt;br style=&quot;box-sizing: border-box;&quot;&gt;- ability to choose between simple ts modelling (arima, sarima) and modelling with exogenous variables (sarimax)&lt;br style=&quot;box-sizing: border-box;&quot;&gt;- optimal model suggestion (with respect to specified set of variables)&lt;br style=&quot;box-sizing: border-box;&quot;&gt;- generation of raport on timeseries with out-of-sample prediction&lt;br style=&quot;box-sizing: border-box;&quot;&gt;- (possibly) adding an option to run an lgboost model&amp;nbsp;&amp;nbsp;&lt;br style=&quot;box-sizing: border-box;&quot;&gt;&lt;br&gt;1. Writing own advanced functions in R (including defensive programming)&lt;br style=&quot;box-sizing: border-box;&quot;&gt;&lt;br style=&quot;box-sizing: border-box;&quot;&gt;&lt;span style=&quot;box-sizing: border-box; font-weight: bolder;&quot;&gt;Used libraries:&lt;/span&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Arial, &amp;quot;Noto Sans&amp;quot;, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;, &amp;quot;Noto Color Emoji&amp;quot;; text-align: left; font-size: 11px;&quot; dir=&quot;ltr&quot;&gt;&lt;em style=&quot;box-sizing: border-box;&quot;&gt;&lt;font style=&quot;font-size: 11px; background-color: rgb(255, 255, 255);&quot;&gt;R-shiny&lt;/font&gt;&lt;/em&gt;&lt;/p&gt;&lt;p style=&quot;box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Arial, &amp;quot;Noto Sans&amp;quot;, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;, &amp;quot;Noto Color Emoji&amp;quot;; text-align: left; font-size: 11px;&quot; dir=&quot;ltr&quot;&gt;&lt;font style=&quot;font-size: 11px; background-color: rgb(255, 255, 255);&quot;&gt;&lt;em style=&quot;box-sizing: border-box;&quot;&gt;Forecast&lt;/em&gt;: https://cran.r-project.org/web/packages/forecast/index.html&amp;nbsp;&lt;br style=&quot;box-sizing: border-box;&quot;&gt;&lt;em style=&quot;box-sizing: border-box;&quot;&gt;Sarima&lt;/em&gt;:&amp;nbsp;https://cran.r-project.org/web/packages/sarima/sarima.pdf&amp;nbsp;&lt;br style=&quot;box-sizing: border-box;&quot;&gt;&lt;em style=&quot;box-sizing: border-box;&quot;&gt;Lightgbm&lt;/em&gt;&amp;nbsp;(possibly):&amp;nbsp;&lt;a style=&quot;box-sizing: border-box; color: rgb(15, 111, 197); text-decoration-line: none;&quot; rel=&quot;noreferrer noopener&quot; target=&quot;_blank&quot; href=&quot;https://lightgbm.readthedocs.io/en/latest/R/index.html?fbclid=IwAR1Ayheqt4Bmt_HWNovlnR4Jx-TQjl8pNWP8feGPPOWe7YYKKrkdZh_5lFY&quot;&gt;https://lightgbm.readthedocs.io/en/latest/R/index.html&lt;/a&gt;&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; color: rgb(33, 37, 41); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, &amp;quot;Helvetica Neue&amp;quot;, Arial, &amp;quot;Noto Sans&amp;quot;, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;, &amp;quot;Noto Color Emoji&amp;quot;; text-align: left; font-size: 11px;&quot; dir=&quot;ltr&quot;&gt;&lt;b&gt;6 elements:&lt;/b&gt;&lt;/p&gt;&lt;p style=&quot;box-sizing: border-box; margin-top: 0px; margin-bottom: 1rem; text-align: left; font-size: 11px;&quot; dir=&quot;ltr&quot;&gt;&lt;font color=&quot;#212529&quot;&gt;1. &lt;/font&gt;&lt;font color=&quot;#5eff79&quot;&gt;Writing own advanced functions in R (including defensive programming)&lt;/font&gt;&lt;br style=&quot;box-sizing: border-box; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;&lt;font color=&quot;#212529&quot;&gt;2. &lt;/font&gt;&lt;font color=&quot;#5eff79&quot;&gt;Object-oriented programming - creating own classes, methods and generic functions of the S3, S4 and R6 systems&lt;/font&gt;&lt;/span&gt;&lt;br style=&quot;box-sizing: border-box; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;color: rgb(33, 37, 41); background-color: rgb(255, 255, 255);&quot;&gt;3. Use of C++ in R (Rcpp) ??? in data preprocessing??&lt;/span&gt;&lt;br style=&quot;box-sizing: border-box; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;color: rgb(33, 37, 41); background-color: rgb(255, 255, 255);&quot;&gt;4. Vectorisation of the code ???&lt;/span&gt;&lt;font color=&quot;#66ff66&quot;&gt;&lt;br style=&quot;box-sizing: border-box; background-color: rgb(255, 255, 255);&quot;&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;5. Shiny + creating analytical dashboards&lt;/span&gt;&lt;/font&gt;&lt;br&gt;&lt;/p&gt;" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
-          <mxGeometry x="640" width="377" height="487" as="geometry" />
+          <mxGeometry x="610" width="407" height="487" as="geometry" />
         </mxCell>
         <mxCell id="YIQBCHJmsgLGY7iEL0ec-1" value="&lt;font style=&quot;font-size: 18px;&quot;&gt;&lt;b&gt;TS-analysis App/Userflow Diagram&amp;nbsp;&lt;/b&gt;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="55" y="-50" width="330" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="KiBKIiQdK7eODyfZwIT1-60" value="Suggesting &amp;amp; Selecting Model&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00CCCC;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
+        <mxCell id="KiBKIiQdK7eODyfZwIT1-60" value="Suggesting &amp;amp; Selecting Optimal Model&amp;nbsp;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#00CCCC;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
           <mxGeometry x="157.5" y="730" width="125" height="50" as="geometry" />
         </mxCell>
         <mxCell id="KiBKIiQdK7eODyfZwIT1-61" value="Selecting time granularity" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#FFD966;fillColor=#FFD966;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
@@ -122,58 +116,32 @@
         <mxCell id="GpCBLMyIrS85qdbW2vYx-14" value="Autocorellation" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#5EFF64;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="155" y="542" width="130" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="GpCBLMyIrS85qdbW2vYx-18" value="" style="edgeStyle=elbowEdgeStyle;elbow=vertical;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="220" y="630" as="sourcePoint" />
-            <mxPoint x="430" y="360" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="340" y="627" />
-              <mxPoint x="430" y="400" />
-              <mxPoint x="648.5" y="332.25" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="GpCBLMyIrS85qdbW2vYx-19" value="YES" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontStyle=1" vertex="1" connectable="0" parent="GpCBLMyIrS85qdbW2vYx-18">
-          <mxGeometry x="0.5674" relative="1" as="geometry">
-            <mxPoint as="offset" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="GpCBLMyIrS85qdbW2vYx-20" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="430" y="360" as="sourcePoint" />
-            <mxPoint x="220" y="400" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="220" y="360" />
-              <mxPoint x="220" y="390" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
         <mxCell id="GpCBLMyIrS85qdbW2vYx-22" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="130" y="422" width="20" height="160" as="geometry" />
         </mxCell>
         <mxCell id="GpCBLMyIrS85qdbW2vYx-28" value="&lt;b&gt;Class: TS-Decomposer&lt;/b&gt;" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=none;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="-100" y="350" width="210" height="294" as="geometry" />
+          <mxGeometry x="-90" y="367" width="210" height="310" as="geometry" />
         </mxCell>
-        <mxCell id="GpCBLMyIrS85qdbW2vYx-29" value="Input: raw time-series in selected time granularity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="GpCBLMyIrS85qdbW2vYx-28">
-          <mxGeometry y="26" width="210" height="44" as="geometry" />
+        <mxCell id="GpCBLMyIrS85qdbW2vYx-29" value="Input: Dataframe with selected raw time-series in selected time granularity" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="GpCBLMyIrS85qdbW2vYx-28">
+          <mxGeometry y="26" width="210" height="64" as="geometry" />
         </mxCell>
         <mxCell id="GpCBLMyIrS85qdbW2vYx-30" value="Output: DateFrame: Stationary, not-autocorrelated time-series (with or without seasonal component &lt;b&gt;&lt;font color=&quot;#ff3333&quot;&gt;???&lt;/font&gt;)&amp;nbsp;&lt;/b&gt;+ info about Seasonality, Autocorellation severity." style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="GpCBLMyIrS85qdbW2vYx-28">
-          <mxGeometry y="70" width="210" height="90" as="geometry" />
+          <mxGeometry y="90" width="210" height="80" as="geometry" />
         </mxCell>
         <mxCell id="GpCBLMyIrS85qdbW2vYx-31" value="&lt;b&gt;ATTRIBUTES:&lt;/b&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="GpCBLMyIrS85qdbW2vYx-28">
-          <mxGeometry y="160" width="210" height="30" as="geometry" />
+          <mxGeometry y="170" width="210" height="30" as="geometry" />
         </mxCell>
         <mxCell id="GpCBLMyIrS85qdbW2vYx-37" value="Item 3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="GpCBLMyIrS85qdbW2vYx-28">
-          <mxGeometry y="190" width="210" height="26" as="geometry" />
+          <mxGeometry y="200" width="210" height="26" as="geometry" />
         </mxCell>
         <mxCell id="GpCBLMyIrS85qdbW2vYx-40" value="Item 3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="GpCBLMyIrS85qdbW2vYx-28">
-          <mxGeometry y="216" width="210" height="26" as="geometry" />
+          <mxGeometry y="226" width="210" height="26" as="geometry" />
         </mxCell>
         <mxCell id="GpCBLMyIrS85qdbW2vYx-39" value="&lt;b&gt;METHODS:&lt;/b&gt;" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="GpCBLMyIrS85qdbW2vYx-28">
-          <mxGeometry y="242" width="210" height="26" as="geometry" />
+          <mxGeometry y="252" width="210" height="26" as="geometry" />
         </mxCell>
         <mxCell id="GpCBLMyIrS85qdbW2vYx-36" value="Item 3" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;whiteSpace=wrap;html=1;" vertex="1" parent="GpCBLMyIrS85qdbW2vYx-28">
-          <mxGeometry y="268" width="210" height="26" as="geometry" />
+          <mxGeometry y="278" width="210" height="32" as="geometry" />
         </mxCell>
         <mxCell id="GpCBLMyIrS85qdbW2vYx-42" value="&lt;b&gt;Action Points:&amp;nbsp;&lt;/b&gt;&lt;br&gt;1. Loading a Dataset on github" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="640" y="502" width="190" height="40" as="geometry" />
