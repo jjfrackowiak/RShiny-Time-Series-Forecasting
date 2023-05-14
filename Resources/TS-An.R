@@ -1,5 +1,6 @@
 library(shiny)
 library(forecast)
+library(xts)
 
 ui <- fluidPage(
   titlePanel("Prediction of Interest Rate Value r - ARIMAX Model"),
@@ -32,34 +33,33 @@ server <- function(input, output) {
   data <- reactive({
     req(input$file1)
     df <- read.csv(input$file1$datapath, header = input$header, sep = input$sep)
-    df
+    # Convert Date column to a date object
+    df$Date <- as.Date(df$Date, format = "%d/%m/%Y")
+    # Convert data frame to time series object
+    ts_data <- xts(df[,-1], df$Date) 
+    ts_data
   })
   
   output$plot1 <- renderPlot({
-    plot(data()$x, data()$r,
-         xlim = c(0, 10),
-         ylim = c(0, 10), col = "blue")
+    plot(data()$r, type = "o", col = "blue",
+         xlab = "Date",
+         ylab = "Interest Rate Value (r)")
     if(input$line) {
-      lm_fit <- lm(r ~ x, data = data())
-      abline(lm_fit)
+      lm_fit <- lm(r ~ time(data()), data = data())
       arima_fit <- arima(data()$r, order = c(1, 0, 1), xreg = data()$x)
-      lines(data()$x, arima_fit$fitted, col = "red")
-    
+      lines(arima_fit$fitted, col = "red", lwd = 3)
       legend("bottomright", legend = c("r", "ARIMAX Fit"), 
-             col = c("blue","red"), lty = 1)
+             col = c("blue","red"), lty = 3)
     }
   })
   
   output$selected_x <- renderText({
     arima_fit <- arima(data()$r, order = c(1,1,0), xreg = data()$x)
     pred_value <- predict(arima_fit, n.ahead = 1, newxreg = data.frame(x = as.numeric(input$number)))
-    print(length(arima_fit$fitted))
-    paste("Predicted value of the interest rate r for the selected x value: ", pred_value$pred)
+    paste("Predicted value of the interest rate r for the selected x value (one period ahead): ", pred_value$pred)
   })
-  
   
 }
 
 
 shinyApp(ui = ui, server = server)
-
