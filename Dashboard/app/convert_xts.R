@@ -25,3 +25,6 @@ convert_xts <- function(xts_obj, frequency) {
   # if frequency is not recognized, return original object
   return(xts_obj)
 }
+
+
+

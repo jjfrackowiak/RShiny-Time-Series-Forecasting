@@ -1,27 +1,3 @@
-library(shiny)
-library(ggplot2)
-library(plotly)
-library(xts)
-library(quantmod)
-library(dygraphs)
-library(tidyquant)
-library(dplyr)
-library(ggplot2)
-library(shinythemes)
-library(zoo)
-library(recommenderlab)
-library(ggplot2)                       
-library(data.table)
-library(reshape2)
-library(tidyr)
-library(dtplyr) # dplyr is part of dtplyr
-library(dplyr)
-library(R6)
-library(PBSmodelling)
-library(rmarkdown)
-library(shinybusy)
-
-
 shinyUI(fluidPage(
 
     # Application title
@@ -32,6 +8,8 @@ shinyUI(fluidPage(
         
         # Sidebar panel
         sidebarPanel(
+            # Info widget
+            htmlOutput("formatted_text"),
             
             #File Input
             fileInput("file", "Upload a CSV file with the data in daily frequency",
@@ -41,16 +19,13 @@ shinyUI(fluidPage(
                          choices = c(Comma = ",", Semicolon = ";", Tab = "\t"),
                          selected = ","),
             
-            # Info widget
-            verbatimTextOutput(outputId = "info_widget"),
-            
             # Date column
             selectInput(inputId = "date_col", label = "Select the date column",
                         choices = NULL),
             
         
             # Granularity
-            selectInput(inputId = "granularity", label = "Select time granularity",
+            selectInput(inputId = "granularity", label = "Select desired time granularity",
                         choices = c("Daily", "Monthly", "Quarterly", "Yearly")),
             
             # Variable selection
@@ -59,7 +34,9 @@ shinyUI(fluidPage(
             
             #out-of-sample period
             sliderInput(inputId = "out_of_sample_period", label = "Select the out-of-sample period",
-                              min = 0, max = 1, value = c(0.5, 1), step = 0.01),
+                        min = as.Date("2006-01-01","%Y-%m-%d"),
+                        max = as.Date("2016-12-01","%Y-%m-%d"),
+                        value=c(as.Date("2016-09-01"), as.Date("2016-12-01")), timeFormat="%Y-%m-%d", ticks = FALSE)),
             
             # Button to suggest optimal model and generate report
             actionButton(inputId = "suggest_model", label = "Create best model and generate report")
@@ -69,10 +46,9 @@ shinyUI(fluidPage(
         # Main panel
         mainPanel(
             
-            # Summary table
-            tableOutput(outputId = "summary_table")
+            # Report (Could be printable as PDF)
             
         )
         
     )
-))
+)
