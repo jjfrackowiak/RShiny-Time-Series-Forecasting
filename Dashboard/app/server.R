@@ -123,11 +123,33 @@ shinyServer(function(input, output, session) {
     
     #generating dict. with info to be fed into 
     #the model (After clicking "Suggest model" button)
-    #elements can be accessed like: model_info_named_list$key (eg. xts_obj)
     observeEvent(input$suggest_model, {
         req(input$file)
       
         xts_for_model = ts_data()
+        
+        out_of_sample_period <- input$out_of_sample_period
+        
+        if (input$granularity == "Daily"){
+          dates <- index(xts_for_model)
+          out_of_sample_start <- as.numeric(which(dates == out_of_sample_period[1]))
+          out_of_sample_end <- as.numeric(which(dates == out_of_sample_period[2]))
+          
+          print("_______________________")
+        }
+        
+        else{
+          out_of_sample_start <- out_of_sample_period[1]
+          out_of_sample_end <- out_of_sample_period[2]
+          
+          print("$$$$$$$$$$$$$$$$$$$$$$")
+        }
+        
+        in_sample_start <- as.numeric(1)
+        in_sample_end <- as.numeric(out_of_sample_start-1)
+        
+        print(in_sample_start)
+        print(in_sample_end)
         
         decomposer <- setClass("decomposer",
                                slots = list(dataset = "ANY", date = "character", dependent = "character",
@@ -151,29 +173,15 @@ shinyServer(function(input, output, session) {
                     m_a = as.integer(x@max_aut)
                     m_d = as.integer(x@max_d)
                     season = as.logical(x@seas)
-                    return <- auto.arima(data[,main],
+                    model <- auto.arima(data[,main],
                                          xreg = as.matrix(data[,indep]), trace = TRUE, seasonal = season,
                                          stepwise = FALSE, approximation = FALSE, max.p = m_a, max.d = m_d
                     )
-                    checkresiduals(return)
+                    model
                   })
         
-        
-        model_info_named_list = list(
-          "xts_obj" = xts_for_model,
-          "out_of_sample_indices" = input$out_of_sample_period, #dates in case of daily data, indices in other cases
-          "selected_dep_var_names" = input$dependent_var,
-          "selected_indep_vars_names" = input$independent_vars,
-          "chosen_frequency" = input$granularity,
-          "ses" = input$ses, 
-          "max_auto" = input$max_auto,
-          "max_ma" = input$max_ma, 
-          "max_diff" = input$max_diff
-        )
-        
-        
         decomposer <- new(Class = "decomposer", 
-                    dataset = xts_for_model,
+                    dataset = xts_for_model[in_sample_start:in_sample_end,],
                     date = input$date_col,
                     dependent = input$dependent_var,
                     independent = input$independent_vars,
@@ -185,7 +193,7 @@ shinyServer(function(input, output, session) {
         
         output$diagnostic_plot<- renderPlot({{
           #plotting diagnostic plots
-          auto_arima(decomposer)
+          checkresiduals(auto_arima(decomposer))
           
           
           }})
