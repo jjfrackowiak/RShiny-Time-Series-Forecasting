@@ -135,6 +135,7 @@ shinyServer(function(input, output, session) {
         "selected_dep_var_names" = input$dependent_var,
         "selected_indep_vars_names" = input$independent_vars,
         "chosen_frequency" = input$granularity,
+        "ses" = input$ses, 
         "max_auto" = input$max_auto,
         "max_ma" = input$max_ma, 
         "max_diff" = input$max_diff
