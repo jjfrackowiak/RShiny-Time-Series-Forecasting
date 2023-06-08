@@ -12,12 +12,14 @@ shinyUI(fluidPage(
             htmlOutput("formatted_text"),
             
             #File Input
+            radioButtons("sep", "Expected data separator",
+                         choices = c(Comma = ",", Semicolon = ";", Tab = "\t"),
+                         selected = ","),
+            
             fileInput("file", "Upload a CSV file with the data in daily frequency",
                       accept = c(".csv")),
             
-            radioButtons("sep", "Separator",
-                         choices = c(Comma = ",", Semicolon = ";", Tab = "\t"),
-                         selected = ","),
+            
             
             # Date column
             selectInput(inputId = "date_col", label = "Select the date column",
@@ -34,7 +36,7 @@ shinyUI(fluidPage(
             
             # Seasonality
             radioButtons("ses", "Seasonality",
-                         choices = c(Comma = "True", Semicolon = "False"),
+                         choices = c(True = "True", False = "False"),
                          selected = "False"),
             
             #Max number of differences
@@ -44,7 +46,7 @@ shinyUI(fluidPage(
               value = 1,
               min = 0,
               max = 4,
-              step = 1,
+              step = 1
               #width = NULL
             ),
             
@@ -55,7 +57,7 @@ shinyUI(fluidPage(
               value = 3,
               min = 1,
               max = 15,
-              step = 1,
+              step = 1
               #width = NULL
             ),
             
@@ -66,7 +68,7 @@ shinyUI(fluidPage(
               value = 3,
               min = 0,
               max = 10,
-              step = 1,
+              step = 1
               #width = NULL
             ),
             
@@ -74,19 +76,24 @@ shinyUI(fluidPage(
             sliderInput(inputId = "out_of_sample_period", label = "Select the out-of-sample period",
                         min = as.Date("2006-01-01","%Y-%m-%d"),
                         max = as.Date("2016-12-01","%Y-%m-%d"),
-                        value=c(as.Date("2016-09-01"), as.Date("2016-12-01")), timeFormat="%Y-%m-%d", ticks = FALSE)),
+                        value=c(as.Date("2016-09-01"), as.Date("2016-12-01")), timeFormat="%Y-%m-%d", ticks = FALSE),
             
             # Button to suggest optimal model and generate report
             actionButton(inputId = "suggest_model", label = "Create best model and generate report")
-            
+
         ),
         
         # Main panel
         mainPanel(
-            
-            # Report (Could be printable as PDF)
+          
+          #Plots and text
+          plotOutput("diagnostic_plot"),
+          br(),
+          strong(textOutput("model_description"))
+          
             
         )
         
-    )
+    ))
 )
+

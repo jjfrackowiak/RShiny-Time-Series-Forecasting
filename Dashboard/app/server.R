@@ -121,26 +121,86 @@ shinyServer(function(input, output, session) {
         
     })
     
-    #generating dict. with info to be fed into our decomposition pipeline and 
-    #our models (After clicking "Suggest model" button)
+    #generating dict. with info to be fed into 
+    #the model (After clicking "Suggest model" button)
     #elements can be accessed like: model_info_named_list$key (eg. xts_obj)
     observeEvent(input$suggest_model, {
         req(input$file)
       
         xts_for_model = ts_data()
         
+        decomposer <- setClass("decomposer",
+                               slots = list(dataset = "ANY", date = "character", dependent = "character",
+                                            independent = "character", gran = "character", seas = "character",
+                                            max_aut = "character", max_d = "character"),
+                               validity = function(object){
+                                 return(TRUE)
+                               })
+        
+        
+        setGeneric(name = "auto_arima", 
+                   def = function(x) {
+                     standardGeneric(("auto_arima"))
+                   })
+        
+        setMethod("auto_arima", signature = "decomposer",
+                  definition = function(x){
+                    data = x@dataset
+                    main = x@dependent
+                    indep = x@independent
+                    m_a = as.integer(x@max_aut)
+                    m_d = as.integer(x@max_d)
+                    season = as.logical(x@seas)
+                    return <- auto.arima(data[,main],
+                                         xreg = as.matrix(data[,indep]), trace = TRUE, seasonal = season,
+                                         stepwise = FALSE, approximation = FALSE, max.p = m_a, max.d = m_d
+                    )
+                    checkresiduals(return)
+                  })
+        
+        
         model_info_named_list = list(
-        "xts_obj" = xts_for_model,
-        "out_of_sample_indices" = input$out_of_sample_period, #dates in case of daily data, indices in other cases
-        "selected_dep_var_names" = input$dependent_var,
-        "selected_indep_vars_names" = input$independent_vars,
-        "chosen_frequency" = input$granularity,
-        "ses" = input$ses, 
-        "max_auto" = input$max_auto,
-        "max_ma" = input$max_ma, 
-        "max_diff" = input$max_diff
+          "xts_obj" = xts_for_model,
+          "out_of_sample_indices" = input$out_of_sample_period, #dates in case of daily data, indices in other cases
+          "selected_dep_var_names" = input$dependent_var,
+          "selected_indep_vars_names" = input$independent_vars,
+          "chosen_frequency" = input$granularity,
+          "ses" = input$ses, 
+          "max_auto" = input$max_auto,
+          "max_ma" = input$max_ma, 
+          "max_diff" = input$max_diff
         )
         
-        print(model_info_named_list)
+        
+        decomposer <- new(Class = "decomposer", 
+                    dataset = xts_for_model,
+                    date = input$date_col,
+                    dependent = input$dependent_var,
+                    independent = input$independent_vars,
+                    gran = input$granularity,
+                    seas = input$ses,
+                    max_aut = as.character(input$max_auto),
+                    max_d = as.character(input$max_diff))
+        
+        
+        output$diagnostic_plot<- renderPlot({{
+          #plotting diagnostic plots
+          auto_arima(decomposer)
+          
+          
+          }})
+        
+        output$model_description <- renderText({
+          #HTML("<p style='font-size: 14px; text-align: justify;'>
+          #          <b>Report:</b><br>
+          #          </p>")
+          #r <- as.numeric(unlist(strsplit(input$number1,",")))
+          #x <- as.numeric(unlist(strsplit(input$number2,",")))
+          #lm(x ~ r)
+          #matrix_coef <- summary(lm(x ~ r))$coefficients
+          #pred_value <- (matrix_coef[2,1]*as.numeric(input$number3)+matrix_coef[1,1])
+          
+          paste("Predykowana wartość stopy r dla wybranej wartości x: ")
+        })
     })
 })
