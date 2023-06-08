@@ -32,6 +32,44 @@ shinyUI(fluidPage(
             selectInput(inputId = "dependent_var", label = "Select dependent variable", choices = NULL),
             checkboxGroupInput(inputId = "independent_vars", label = "Select independent variables", choices = NULL),
             
+            # Seasonality
+            radioButtons("ses", "Seasonality",
+                         choices = c(Comma = "True", Semicolon = "False"),
+                         selected = "False"),
+            
+            #Max number of differences
+            numericInput(
+              inputId = "max_diff",
+              label = "Max. number of differeces",
+              value = 1,
+              min = 0,
+              max = 4,
+              step = 1,
+              #width = NULL
+            ),
+            
+            #Max number of autoregressive terms
+            numericInput(
+              inputId = "max_auto",
+              label = "Max. number of autoregressive terms",
+              value = 3,
+              min = 1,
+              max = 15,
+              step = 1,
+              #width = NULL
+            ),
+            
+            #Max number of MA terms
+            numericInput(
+              inputId = "max_ma",
+              label = "Max. number of moving average terms",
+              value = 3,
+              min = 0,
+              max = 10,
+              step = 1,
+              #width = NULL
+            ),
+            
             #out-of-sample period
             sliderInput(inputId = "out_of_sample_period", label = "Select the out-of-sample period",
                         min = as.Date("2006-01-01","%Y-%m-%d"),
