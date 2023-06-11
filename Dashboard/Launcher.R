@@ -14,6 +14,7 @@ library(readr)
 library(xts)
 library(tidyr)
 library(Rcpp)
+library(forecast)
 
 
 setwd(dirname(rstudioapi::getSourceEditorContext()$path))

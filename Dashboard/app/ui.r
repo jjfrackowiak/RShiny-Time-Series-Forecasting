@@ -93,7 +93,12 @@ shinyUI(fluidPage(
           br(),
           plotOutput("forecast_plot"),
           br(),
-          strong(textOutput("error_margin"))
+          strong(textOutput("MAPE")),
+          br(),
+          strong(textOutput("MAE")),
+          br(),
+          strong(textOutput("MSE")),
+          br()
 
         )
         

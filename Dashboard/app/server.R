@@ -86,7 +86,8 @@ shinyServer(function(input, output, session) {
                                                                  "%d %B %Y",
                                                                  "%m/%d/%y",
                                                                  "%d/%m/%y",
-                                                                 "%Y%m%d"))
+                                                                 "%Y%m%d",
+                                                                 "%d.%m.%Y"))
         
         granularity <- switch(input$granularity,
                               "Daily" = "daily",
@@ -284,23 +285,35 @@ shinyServer(function(input, output, session) {
         })
         
         
-        output$error_margin <- renderText({
+
+        actual <- as.numeric(xts_for_model[out_of_sample_start:out_of_sample_end, input$dependent_var])
+        forecasted <- as.numeric(forecast$mean)
           
-           actual <- as.numeric(xts_for_model[out_of_sample_start:out_of_sample_end, input$dependent_var])
-           forecasted <- as.numeric(forecast$mean)
           
-            MAPE <- mean(abs((actual - forecasted) / actual)) * 100
-           result <- paste("Mean Absolute Percentage Error:", round(MAPE, 2), "%\n")
+        output$MAPE <- renderText({
+          MAPE <- mean(abs((actual - forecasted) / actual)) * 100
+          paste("Mean Absolute Percentage Error:", round(MAPE, 2), "%,\n")
+           
+        })
+        
+        output$MAE <- renderText({
           
-           MAE <- mean(abs(actual - forecasted))
-            result <- paste("Mean Absolute Error:", round(MAE, 2),"\n")
-          
-           MSE <- mean((actual - forecasted)^2)
-            result <- paste("Mean squared Error:", round(MSE, 2), "\n")
-          
-          # result
+          MAE <- mean(abs(actual - forecasted))
+          paste("Mean Absolute Error:", round(MAE, 2),",")
+            
+        })
+        
+        output$MSE <- renderText({
+          MSE <- mean((actual - forecasted)^2)
+          paste("Mean squared Error:", round(MSE, 2), "\n")
           
         })
+          
+           # result_mean <- paste("MAPE:",MAPE,"%\n","MAE:",MAE,"\n","MSE:", MSE)
+           # result_mean
+           # result
+          
+
         
         
     })

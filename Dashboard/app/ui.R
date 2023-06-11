@@ -89,9 +89,17 @@ shinyUI(fluidPage(
           #Plots and text
           plotOutput("diagnostic_plot"),
           br(),
-          strong(textOutput("model_description"))
-          
-            
+          strong(textOutput("model_description")),
+          br(),
+          plotOutput("forecast_plot"),
+          br(),
+          strong(textOutput("MAPE")),
+          br(),
+          strong(textOutput("MAE")),
+          br(),
+          strong(textOutput("MSE")),
+          br()
+
         )
         
     ))
