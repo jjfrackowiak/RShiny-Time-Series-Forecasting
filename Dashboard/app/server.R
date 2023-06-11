@@ -22,6 +22,7 @@ shinyServer(function(input, output, session) {
         tryCatch({
         df <- read.csv(input$file$datapath, sep = input$sep)
         }, error = function(e){
+          req(input$file)
           # Error handling code
           showNotification("Error occurred: ", conditionMessage(e), type = "error")
         })
@@ -34,6 +35,7 @@ shinyServer(function(input, output, session) {
           updateSelectInput(session, inputId = "date_col", label = "Select the date column",
                           choices = names(data()))
           }, error = function(e){
+            req(input$file)
             # Error handling code
             showNotification("Error occurred: ", conditionMessage(e), type = "error")
           })
@@ -54,6 +56,7 @@ shinyServer(function(input, output, session) {
         updateCheckboxGroupInput(session, inputId = "independent_vars", label = "Select independent variables",
                                  choices = all_vars)
         }, error = function(e){
+          req(input$file)
           # Error handling code
           showNotification("Error occurred: ", conditionMessage(e), type = "error")
         })
@@ -99,6 +102,7 @@ shinyServer(function(input, output, session) {
         source("convert_xts.R")
         ts_df = convert_xts(ts_df, granularity)
         }, error = function(e){
+          req(input$file)
           # Error handling code
           showNotification("Error occurred: ", conditionMessage(e), type = "error")
         })
@@ -139,6 +143,7 @@ shinyServer(function(input, output, session) {
                           max = max_d,
                           value = values_d, step = 1)}
     }, error = function(e){
+      req(input$file)
       # Error handling code
       showNotification("Error occurred: ", conditionMessage(e), type = "error")
     })
