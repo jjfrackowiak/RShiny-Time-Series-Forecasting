@@ -177,7 +177,7 @@ shinyServer(function(input, output, session) {
         
         decomposer <- setClass("decomposer",
                                slots = list(dataset = "ANY", date = "character", dependent = "character",
-                                            independent = "character", gran = "character", seas = "character",
+                                            independent = "ANY", gran = "character", seas = "character",
                                             max_aut = "character", max_d = "character"),
                                validity = function(object){
                                  return(TRUE)
@@ -197,9 +197,22 @@ shinyServer(function(input, output, session) {
                     m_a = as.integer(x@max_aut)
                     m_d = as.integer(x@max_d)
                     season = as.logical(x@seas)
-                    model <- auto.arima(data[,main],
-                                         xreg = as.matrix(data[,indep]), trace = TRUE, seasonal = season,
-                                         stepwise = FALSE, approximation = FALSE, max.p = m_a, max.d = m_d
+                    model <- if (!is.null(indep)) 
+                                        auto.arima(data[,main],
+                                        xreg = as.matrix(data[, indep]),
+                                        trace = TRUE,
+                                        seasonal = season,
+                                        stepwise = FALSE,
+                                        approximation = FALSE,
+                                        max.p = m_a,
+                                        max.d = m_d) 
+                            else auto.arima(data[,main],
+                                      trace = TRUE,
+                                      seasonal = season,
+                                      stepwise = FALSE,
+                                      approximation = FALSE,
+                                      max.p = m_a,
+                                      max.d = m_d
                     )
                     model
                   })
