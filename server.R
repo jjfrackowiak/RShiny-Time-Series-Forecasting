@@ -19,19 +19,30 @@ shinyServer(function(input, output, session) {
     # Load data
     data <- reactive({
         req(input$file)
+        tryCatch({
         df <- read.csv(input$file$datapath, sep = input$sep)
+        }, error = function(e){
+          # Error handling code
+          showNotification("Error occurred: ", conditionMessage(e), type = "error")
+        })
     })
     
     
     # Update date column choices based on uploaded data
     observeEvent(data(), {
-        updateSelectInput(session, inputId = "date_col", label = "Select the date column",
+          tryCatch({
+          updateSelectInput(session, inputId = "date_col", label = "Select the date column",
                           choices = names(data()))
+          }, error = function(e){
+            # Error handling code
+            showNotification("Error occurred: ", conditionMessage(e), type = "error")
+          })
     })
     
     # Update variable choices based on uploaded data
     observeEvent(data(), {
         
+        tryCatch({
         # Get list of all variable names (excluding date column)
         all_vars <- names(data())[names(data()) != input$date_col]
         
@@ -42,13 +53,17 @@ shinyServer(function(input, output, session) {
         # Update checkbox group input for independent variables
         updateCheckboxGroupInput(session, inputId = "independent_vars", label = "Select independent variables",
                                  choices = all_vars)
+        }, error = function(e){
+          # Error handling code
+          showNotification("Error occurred: ", conditionMessage(e), type = "error")
+        })
     })
     
     # Transform data to time series based on selected granularity
     ts_data <- reactive({
         req(input$file)
         req(input$granularity)
-        
+        tryCatch({
         #dealing with missing values
         #C++ function for linear interpolation of values
         sourceCpp("linear_interp.cpp")
@@ -83,11 +98,16 @@ shinyServer(function(input, output, session) {
         #importing convert_xts function changing frequencies of xts obj.
         source("convert_xts.R")
         ts_df = convert_xts(ts_df, granularity)
+        }, error = function(e){
+          # Error handling code
+          showNotification("Error occurred: ", conditionMessage(e), type = "error")
+        })
         
     })
     
     observeEvent(c(input$granularity, input$date_col),{
         
+        tryCatch({
         #requirements
         req(input$file)
         req(input$granularity)
@@ -118,20 +138,46 @@ shinyServer(function(input, output, session) {
                           min = min_d,
                           max = max_d,
                           value = values_d, step = 1)}
+    }, error = function(e){
+      # Error handling code
+      showNotification("Error occurred: ", conditionMessage(e), type = "error")
+    })
         
     })
     
     #generating dict. with info to be fed into 
     #the model (After clicking "Suggest model" button)
-    #elements can be accessed like: model_info_named_list$key (eg. xts_obj)
     observeEvent(input$suggest_model, {
         req(input$file)
       
         xts_for_model = ts_data()
         
+        out_of_sample_period <- input$out_of_sample_period
+        
+        if (input$granularity == "Daily"){
+          dates <- index(xts_for_model)
+          out_of_sample_start <- as.numeric(which(dates == out_of_sample_period[1]))
+          out_of_sample_end <- as.numeric(which(dates == out_of_sample_period[2]))
+          
+          print("_______________________")
+        }
+        
+        else{
+          out_of_sample_start <- out_of_sample_period[1]
+          out_of_sample_end <- out_of_sample_period[2]
+          
+          print("$$$$$$$$$$$$$$$$$$$$$$")
+        }
+        
+        in_sample_start <- as.numeric(1)
+        in_sample_end <- as.numeric(out_of_sample_start-1)
+        
+        print(in_sample_start)
+        print(in_sample_end)
+        
         decomposer <- setClass("decomposer",
                                slots = list(dataset = "ANY", date = "character", dependent = "character",
-                                            independent = "character", gran = "character", seas = "character",
+                                            independent = "ANY", gran = "character", seas = "character",
                                             max_aut = "character", max_d = "character"),
                                validity = function(object){
                                  return(TRUE)
@@ -151,44 +197,48 @@ shinyServer(function(input, output, session) {
                     m_a = as.integer(x@max_aut)
                     m_d = as.integer(x@max_d)
                     season = as.logical(x@seas)
-                    return <- auto.arima(data[,main],
-                                         xreg = as.matrix(data[,indep]), trace = TRUE, seasonal = season,
-                                         stepwise = FALSE, approximation = FALSE, max.p = m_a, max.d = m_d
+                    model <- if (!is.null(indep)) 
+                                        auto.arima(data[,main],
+                                        xreg = as.matrix(data[, indep]),
+                                        trace = TRUE,
+                                        seasonal = season,
+                                        stepwise = FALSE,
+                                        approximation = FALSE,
+                                        max.p = m_a,
+                                        max.d = m_d) 
+                            else auto.arima(data[,main],
+                                      trace = TRUE,
+                                      seasonal = season,
+                                      stepwise = FALSE,
+                                      approximation = FALSE,
+                                      max.p = m_a,
+                                      max.d = m_d
                     )
-                    checkresiduals(return)
+                    model
                   })
         
-        
-        model_info_named_list = list(
-          "xts_obj" = xts_for_model,
-          "out_of_sample_indices" = input$out_of_sample_period, #dates in case of daily data, indices in other cases
-          "selected_dep_var_names" = input$dependent_var,
-          "selected_indep_vars_names" = input$independent_vars,
-          "chosen_frequency" = input$granularity,
-          "ses" = input$ses, 
-          "max_auto" = input$max_auto,
-          "max_ma" = input$max_ma, 
-          "max_diff" = input$max_diff
-        )
-        
-        
         decomposer <- new(Class = "decomposer", 
-                    dataset = xts_for_model,
-                    date = input$date_col,
-                    dependent = input$dependent_var,
-                    independent = input$independent_vars,
-                    gran = input$granularity,
-                    seas = input$ses,
-                    max_aut = as.character(input$max_auto),
-                    max_d = as.character(input$max_diff))
+                          dataset = xts_for_model[in_sample_start:in_sample_end,],
+                          date = input$date_col,
+                          dependent = input$dependent_var,
+                          independent = input$independent_vars,
+                          gran = input$granularity,
+                          seas = input$ses,
+                          max_aut = as.character(input$max_auto),
+                          max_d = as.character(input$max_diff))
         
         
         output$diagnostic_plot<- renderPlot({{
           #plotting diagnostic plots
-          auto_arima(decomposer)
+          
+          #trained_model < - auto_arima(decomposer)
+          
+          checkresiduals(auto_arima(decomposer))
+          
+          #checkresiduals(trained_model)
           
           
-          }})
+        }})
         
         output$model_description <- renderText({
           #HTML("<p style='font-size: 14px; text-align: justify;'>
@@ -200,7 +250,53 @@ shinyServer(function(input, output, session) {
           #matrix_coef <- summary(lm(x ~ r))$coefficients
           #pred_value <- (matrix_coef[2,1]*as.numeric(input$number3)+matrix_coef[1,1])
           
-          paste("Predykowana wartość stopy r dla wybranej wartości x: ")
+          #paste("The predicted value of the rate r for the selected value of x: ")
         })
+        
+        
+        
+        
+        forecast_decomposer <- new(Class = "decomposer",
+                                   dataset = xts_for_model[out_of_sample_start:out_of_sample_end,],
+                                   date = input$date_col,
+                                   dependent = input$dependent_var,
+                                   independent = input$independent_vars,
+                                   gran = input$granularity,
+                                   seas = input$ses,
+                                   max_aut = as.character(input$max_auto),
+                                   max_d = as.character(input$max_diff))
+        
+        #forecast_model <- checkresiduals(auto_arima(forecast_decomposer))
+        
+        regressor <- forecast_decomposer@dataset[, input$independent_vars]
+        forecast <- forecast(auto_arima(decomposer),
+                             xreg = as.matrix(regressor),
+                             h = length(out_of_sample_start:out_of_sample_end))
+        
+        output$forecast_plot <- renderPlot({
+        plot(forecast)
+          
+        })
+        
+        
+        output$error_margin <- renderText({
+          
+           actual <- as.numeric(xts_for_model[out_of_sample_start:out_of_sample_end, input$dependent_var])
+           forecasted <- as.numeric(forecast$mean)
+          
+            MAPE <- mean(abs((actual - forecasted) / actual)) * 100
+           result <- paste("Mean Absolute Percentage Error:", round(MAPE, 2), "%\n")
+          
+           MAE <- mean(abs(actual - forecasted))
+            result <- paste("Mean Absolute Error:", round(MAE, 2),"\n")
+          
+           MSE <- mean((actual - forecasted)^2)
+            result <- paste("Mean squared Error:", round(MSE, 2), "\n")
+          
+          # result
+          
+        })
+        
+        
     })
 })
