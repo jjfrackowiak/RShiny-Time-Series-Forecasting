@@ -4,6 +4,10 @@ This repository stores all files neccessary to run time-series forecasting dashb
 built in RShiny package as a final project for Advanced R classes on 
 Warsaw University’s Faculty of Economics' Data Science programme.
 
+# Dashboard Visual layout:
+
+<img width="1792" alt="Screenshot 2023-06-12 at 22 31 06" src="https://github.com/jjfrackowiak/RShiny-Time-Series-Forecasting/assets/84077365/7aa63136-7ea3-41b4-a23b-ebed84022e7d">
+
 After loading CSV file with data (in daily frequency) and specifying desired model parameters:
 
 - dependent variable name
