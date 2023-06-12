@@ -17,12 +17,16 @@ and model performance measures.
 
 # How to launch the project:
 
-The project can be launch via running launcher.R file which intialises a Shiny window.
+Dashboard can be launched via running 
+```
+launcher.R 
+```
+file which intialises a Shiny window.
 RStudio supports also running the app in browser window.
 
 Authors:
-Antek Piotrowski
-Anirban Das
-Jan Frąckowiak
+Antek Piotrowski <br/>
+Anirban Das <br/>
+Jan Frąckowiak <br/>
 
 
