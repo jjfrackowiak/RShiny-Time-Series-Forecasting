@@ -24,7 +24,7 @@ launcher.R
 file which intialises a Shiny window.
 RStudio supports also running the app in browser window.
 
-Authors:
+<b>Authors:<b/><br/>
 Antek Piotrowski <br/>
 Anirban Das <br/>
 Jan Frąckowiak <br/>
