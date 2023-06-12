@@ -15,6 +15,11 @@ After loading CSV file with data and specifying desired model parameters:
 the app produces a report including diagnostic plots, plotted forecast 
 and model performance measures.
 
+# How to launch the project:
+
+The project can be launch via running launcher.R file which intialises a Shiny window.
+RStudio supports also running the app in browser window.
+
 Authors:
 Antek Piotrowski
 Anirban Das
