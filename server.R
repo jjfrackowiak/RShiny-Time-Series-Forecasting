@@ -22,6 +22,7 @@ shinyServer(function(input, output, session) {
         tryCatch({
         df <- read.csv(input$file$datapath, sep = input$sep)
         }, error = function(e){
+          req(input$file)
           # Error handling code
           showNotification("Error occurred: ", conditionMessage(e), type = "error")
         })
@@ -34,6 +35,7 @@ shinyServer(function(input, output, session) {
           updateSelectInput(session, inputId = "date_col", label = "Select the date column",
                           choices = names(data()))
           }, error = function(e){
+            req(input$file)
             # Error handling code
             showNotification("Error occurred: ", conditionMessage(e), type = "error")
           })
@@ -54,6 +56,7 @@ shinyServer(function(input, output, session) {
         updateCheckboxGroupInput(session, inputId = "independent_vars", label = "Select independent variables",
                                  choices = all_vars)
         }, error = function(e){
+          req(input$file)
           # Error handling code
           showNotification("Error occurred: ", conditionMessage(e), type = "error")
         })
@@ -83,7 +86,8 @@ shinyServer(function(input, output, session) {
                                                                  "%d %B %Y",
                                                                  "%m/%d/%y",
                                                                  "%d/%m/%y",
-                                                                 "%Y%m%d"))
+                                                                 "%Y%m%d",
+                                                                 "%d.%m.%Y"))
         
         granularity <- switch(input$granularity,
                               "Daily" = "daily",
@@ -99,6 +103,7 @@ shinyServer(function(input, output, session) {
         source("convert_xts.R")
         ts_df = convert_xts(ts_df, granularity)
         }, error = function(e){
+          req(input$file)
           # Error handling code
           showNotification("Error occurred: ", conditionMessage(e), type = "error")
         })
@@ -139,6 +144,7 @@ shinyServer(function(input, output, session) {
                           max = max_d,
                           value = values_d, step = 1)}
     }, error = function(e){
+      req(input$file)
       # Error handling code
       showNotification("Error occurred: ", conditionMessage(e), type = "error")
     })
@@ -279,23 +285,35 @@ shinyServer(function(input, output, session) {
         })
         
         
-        output$error_margin <- renderText({
+
+        actual <- as.numeric(xts_for_model[out_of_sample_start:out_of_sample_end, input$dependent_var])
+        forecasted <- as.numeric(forecast$mean)
           
-           actual <- as.numeric(xts_for_model[out_of_sample_start:out_of_sample_end, input$dependent_var])
-           forecasted <- as.numeric(forecast$mean)
           
-            MAPE <- mean(abs((actual - forecasted) / actual)) * 100
-           result <- paste("Mean Absolute Percentage Error:", round(MAPE, 2), "%\n")
+        output$MAPE <- renderText({
+          MAPE <- mean(abs((actual - forecasted) / actual)) * 100
+          paste("Mean Absolute Percentage Error:", round(MAPE, 2), "%,\n")
+           
+        })
+        
+        output$MAE <- renderText({
           
-           MAE <- mean(abs(actual - forecasted))
-            result <- paste("Mean Absolute Error:", round(MAE, 2),"\n")
-          
-           MSE <- mean((actual - forecasted)^2)
-            result <- paste("Mean squared Error:", round(MSE, 2), "\n")
-          
-          # result
+          MAE <- mean(abs(actual - forecasted))
+          paste("Mean Absolute Error:", round(MAE, 2),",")
+            
+        })
+        
+        output$MSE <- renderText({
+          MSE <- mean((actual - forecasted)^2)
+          paste("Mean squared Error:", round(MSE, 2), "\n")
           
         })
+          
+           # result_mean <- paste("MAPE:",MAPE,"%\n","MAE:",MAE,"\n","MSE:", MSE)
+           # result_mean
+           # result
+          
+
         
         
     })
