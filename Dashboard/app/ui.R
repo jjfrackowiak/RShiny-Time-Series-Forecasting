@@ -87,7 +87,7 @@ shinyUI(fluidPage(
         mainPanel(
           
           #Plots and text
-          plotOutput("diagnostic_plot")#,
+          plotOutput("diagnostic_plot"),
           br(),
           plotOutput("forecast_plot"),
           br(),

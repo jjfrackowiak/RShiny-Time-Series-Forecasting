@@ -4,18 +4,13 @@
 # install.packages("xts")
 #install.packages("anytime")
 
-##############################################
-
-# You need to install tinytex for generating the PDF
-# tinytex::install_tinytex()
-
+##############################################3
 library(shiny)
 library(readr)
 library(xts)
 library(tidyr)
-library(Rcpp)
+library(Rcpp) 
 library(forecast)
 
-
-#setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 runApp("app")

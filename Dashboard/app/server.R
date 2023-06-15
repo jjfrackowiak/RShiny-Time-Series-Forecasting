@@ -256,8 +256,8 @@ shinyServer(function(input, output, session) {
         
        
         #calculating & plotting forecasts
-        regressor <- if (!is.null(indep)) xts_for_model[out_of_sample_start:out_of_sample_end, input$independent_vars] else ""
-        forecast <- if (!is.null(indep)) forecast(auto_arima(decomposer),
+        regressor <- if (!is.null(input$independent_vars)) xts_for_model[out_of_sample_start:out_of_sample_end, input$independent_vars] else ""
+        forecast <- if (!is.null(input$independent_vars)) forecast(auto_arima(decomposer),
                                                    xreg = as.matrix(regressor),
                                                    h = length(out_of_sample_start:out_of_sample_end))
                     else forecast(auto_arima(decomposer),
