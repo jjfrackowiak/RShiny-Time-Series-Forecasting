@@ -17,5 +17,5 @@ library(Rcpp)
 library(forecast)
 
 
-setwd(dirname(rstudioapi::getSourceEditorContext()$path))
+#setwd(dirname(rstudioapi::getSourceEditorContext()$path))
 runApp("app")

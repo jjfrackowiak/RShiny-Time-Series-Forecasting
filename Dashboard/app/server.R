@@ -75,7 +75,7 @@ shinyServer(function(input, output, session) {
         data <- data[!(is.na(data[input$date_col]) | data[input$date_col] == ""), ]
         df_interpolated <- apply(data[,-match(input$date_col, names(data))], 2, interpolate)
         
-        #transforming to xts object
+        # Transforming to xts object
         ts_date <-as.Date(data[[input$date_col]], tryFormats = c("%Y-%m-%d",
                                                                  "%m/%d/%Y",
                                                                  "%d/%m/%Y",
@@ -117,10 +117,12 @@ shinyServer(function(input, output, session) {
         req(input$file)
         req(input$granularity)
         
-        #Update out of sample slider group input for independent variables
+        #Update out of sample slider group input for independent variables if
+        #the granularity has changed
         ts_df = ts_data()
         
         if (input$granularity=="Daily"){
+          
         #all dates necessary for the out-of-sample slider
         cut_75_d = index(ts_df)[ceiling(0.75*length(index(ts_df)))]
         cut_75_d = as.Date(cut_75_d, format)
@@ -145,43 +147,47 @@ shinyServer(function(input, output, session) {
                           value = values_d, step = 1)}
     }, error = function(e){
       req(input$file)
+      
       # Error handling code
       showNotification("Error occurred: ", conditionMessage(e), type = "error")
     })
         
     })
     
-    #generating dict. with info to be fed into 
-    #the model (After clicking "Suggest model" button)
+    #After clicking "Suggest model" button: 
+    # 1. XTS object is generated
+    # 2. Model for in_sample period is estimated with an instance of decomposer class
+    # 3. UI is updated with diagnostic plots from the best model
+    # 4. Forecast for the out_of_sample period is calculated together with model's performance measures
+    
     observeEvent(input$suggest_model, {
         req(input$file)
-      
+        
+        #creating XTS object
         xts_for_model = ts_data()
         
         out_of_sample_period <- input$out_of_sample_period
         
+        #reading out-of-sample period
         if (input$granularity == "Daily"){
           dates <- index(xts_for_model)
           out_of_sample_start <- as.numeric(which(dates == out_of_sample_period[1]))
           out_of_sample_end <- as.numeric(which(dates == out_of_sample_period[2]))
           
-          print("_______________________")
         }
         
         else{
           out_of_sample_start <- out_of_sample_period[1]
           out_of_sample_end <- out_of_sample_period[2]
           
-          print("$$$$$$$$$$$$$$$$$$$$$$")
         }
         
+        #reading in-sample period
         in_sample_start <- as.numeric(1)
         in_sample_end <- as.numeric(out_of_sample_start-1)
         
-        print(in_sample_start)
-        print(in_sample_end)
-        
-        decomposer <- setClass("decomposer",
+        #defining class decomposer reading all selected options and fitting best (S)ARIMA(X) model
+        decomposer <- setClass("decomposer", 
                                slots = list(dataset = "ANY", date = "character", dependent = "character",
                                             independent = "ANY", gran = "character", seas = "character",
                                             max_aut = "character", max_d = "character"),
@@ -195,6 +201,7 @@ shinyServer(function(input, output, session) {
                      standardGeneric(("auto_arima"))
                    })
         
+        #method estimating the best model with the use of auto.arima fun.
         setMethod("auto_arima", signature = "decomposer",
                   definition = function(x){
                     data = x@dataset
@@ -223,6 +230,7 @@ shinyServer(function(input, output, session) {
                     model
                   })
         
+        #instantianting and object of class decomposer
         decomposer <- new(Class = "decomposer", 
                           dataset = xts_for_model[in_sample_start:in_sample_end,],
                           date = input$date_col,
@@ -235,49 +243,25 @@ shinyServer(function(input, output, session) {
         
         
         output$diagnostic_plot<- renderPlot({{
+          
           #plotting diagnostic plots
-          
-          #trained_model < - auto_arima(decomposer)
-          
+          print(xts_for_model)
+          print(input$independent_vars)
           checkresiduals(auto_arima(decomposer))
           
-          #checkresiduals(trained_model)
+          
           
           
         }})
         
-        output$model_description <- renderText({
-          #HTML("<p style='font-size: 14px; text-align: justify;'>
-          #          <b>Report:</b><br>
-          #          </p>")
-          #r <- as.numeric(unlist(strsplit(input$number1,",")))
-          #x <- as.numeric(unlist(strsplit(input$number2,",")))
-          #lm(x ~ r)
-          #matrix_coef <- summary(lm(x ~ r))$coefficients
-          #pred_value <- (matrix_coef[2,1]*as.numeric(input$number3)+matrix_coef[1,1])
-          
-          #paste("The predicted value of the rate r for the selected value of x: ")
-        })
-        
-        
-        
-        
-        forecast_decomposer <- new(Class = "decomposer",
-                                   dataset = xts_for_model[out_of_sample_start:out_of_sample_end,],
-                                   date = input$date_col,
-                                   dependent = input$dependent_var,
-                                   independent = input$independent_vars,
-                                   gran = input$granularity,
-                                   seas = input$ses,
-                                   max_aut = as.character(input$max_auto),
-                                   max_d = as.character(input$max_diff))
-        
-        #forecast_model <- checkresiduals(auto_arima(forecast_decomposer))
-        
-        regressor <- forecast_decomposer@dataset[, input$independent_vars]
-        forecast <- forecast(auto_arima(decomposer),
-                             xreg = as.matrix(regressor),
-                             h = length(out_of_sample_start:out_of_sample_end))
+       
+        #calculating & plotting forecasts
+        regressor <- if (!is.null(indep)) xts_for_model[out_of_sample_start:out_of_sample_end, input$independent_vars] else ""
+        forecast <- if (!is.null(indep)) forecast(auto_arima(decomposer),
+                                                   xreg = as.matrix(regressor),
+                                                   h = length(out_of_sample_start:out_of_sample_end))
+                    else forecast(auto_arima(decomposer),
+                                 h = length(out_of_sample_start:out_of_sample_end))
         
         output$forecast_plot <- renderPlot({
         plot(forecast)
@@ -285,7 +269,7 @@ shinyServer(function(input, output, session) {
         })
         
         
-
+        #calculating & printing model's performance measures
         actual <- as.numeric(xts_for_model[out_of_sample_start:out_of_sample_end, input$dependent_var])
         forecasted <- as.numeric(forecast$mean)
           
@@ -309,12 +293,5 @@ shinyServer(function(input, output, session) {
           
         })
           
-           # result_mean <- paste("MAPE:",MAPE,"%\n","MAE:",MAE,"\n","MSE:", MSE)
-           # result_mean
-           # result
-          
-
-        
-        
     })
 })
