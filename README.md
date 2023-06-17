@@ -34,7 +34,7 @@ We are also providing with exemplary data files containing stock quotations, whi
 can loaded to the dashboard as any other data in daily frequency. <br/>
 
 <b>Authors</b> <br/>
-Antonii Piotrowski <br/>
+Antoni Piotrowski <br/>
 Anirban Das <br/>
 Jan Frąckowiak
 
