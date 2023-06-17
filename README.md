@@ -2,7 +2,7 @@
 
 This repository stores all files necessary to run time-series forecasting dashboard built <br/>
 in RShiny package as a final project for Advanced R classes on Warsaw University's <br/>
-Faculty of Economics' Data Science programme. <br/>
+Faculty of Economics' Data Science programme. 
 
 # Dashboard visual layout
 
@@ -33,7 +33,7 @@ including diagnostic plots, plotted forecast and model performance measures. <br
 We are also providing with exemplary data files containing stock quotations, which <br/>
 can loaded to the dashboard as any other data in daily frequency. <br/>
 
-<b>Authors</b>
+<b>Authors</b> <br/>
 Antonii Piotrowski <br/>
 Anirban Das <br/>
 Jan Frąckowiak
