@@ -12,7 +12,7 @@ Faculty of Economics' Data Science programme.
 
 After downloading "Dashboard" folder, the app can be launched by running 
 ```
-launcher.R
+Launcher.R
 ```
 file, which initialises a Shiny window. RStudio also supports running the app in browser mode. <br/>
 
