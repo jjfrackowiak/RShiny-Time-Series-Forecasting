@@ -31,7 +31,7 @@ the app estimates an optimal model of (S)ARIMA(X) class and produces a report <b
 including diagnostic plots, plotted forecast and model performance measures. <br/>
 
 We are also providing with exemplary data files containing stock quotations, which <br/>
-can loaded to the dashboard as any other data in daily frequency. <br/>
+can be loaded to the dashboard as any other data in daily frequency. <br/>
 
 <b>Authors</b> <br/>
 Antoni Piotrowski <br/>
