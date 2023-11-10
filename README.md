@@ -6,7 +6,7 @@ Faculty of Economics' Data Science programme.
 
 # Dashboard visual layout
 
-<img width="1792" alt="Screenshot 2023-06-17 at 12 31 35" src="https://github.com/jjfrackowiak/RShiny-Time-Series-Forecasting/assets/84077365/04ddb280-7a11-465b-8be6-200df6c3d8ec">
+<img width="1792" alt="Screenshot 2023-11-10 at 14 22 51" src="https://github.com/jjfrackowiak/RShiny-Time-Series-Forecasting/assets/84077365/74a0accc-8f71-49ec-86ca-2e2226db491b">
 
 # How to launch and use the app
 
