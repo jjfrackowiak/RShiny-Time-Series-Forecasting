@@ -1,4 +1,4 @@
-shinyUI(fluidPage(
+shinyUI(fluidPage(theme = shinytheme("darkly"),
 
     # Application title
     titlePanel("Optimal (S)ARIMA(X) Model"),
